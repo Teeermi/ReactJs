@@ -1,5 +1,6 @@
 import React from "react";
 import ReactDOM from "react-dom/client";
+import "./index.css";
 
 const pizzaData = [
   {
@@ -48,20 +49,59 @@ const pizzaData = [
 
 function App() {
   return (
-    <div>
-      <h1>Welcome to pizza menu</h1>
-      <Pizza />
-      <Pizza />
-      <Pizza />
+    <div className="container">
+      <Header />
+      <Menu />
+      <Footer />
     </div>
   );
+}
+
+function Header() {
+  // const style = { color: "red", fontSize: "40px", textTransform: "uppercase" };
+  //style={style}
+  return (
+    <header className="header">
+      <h1 className="header">React Pizza</h1>
+    </header>
+  );
+}
+
+function Menu() {
+  return (
+    <main className="menu">
+      <h2>Our Menu</h2>
+      <Pizza />
+      <Pizza />
+      <Pizza />
+      <Pizza />
+      <Pizza />
+      <Pizza />
+    </main>
+  );
+}
+
+function Footer() {
+  const hour = new Date().getHours();
+  const openHour = 12;
+  const closeHour = 22;
+  const isOpen = hour >= openHour && hour <= closeHour;
+  console.log(isOpen);
+
+  // if (hour >= openHour && hour <= closeHour) {
+  //   alert("OPEN");
+  // } else {
+  //   alert("CLOSE");
+  // }
+
+  return <footer className="footer"> {new Date().toLocaleTimeString()} We are open</footer>;
 }
 
 function Pizza() {
   return (
     <div>
       <img src="pizzas/spinaci.jpg" alt=""></img>
-      <h1>Pizza Salamino</h1>
+      <h3>Pizza Salamino</h3>
       <p>Tomato, mozarella, ham, aragula, and burrata cheese</p>
     </div>
   );
