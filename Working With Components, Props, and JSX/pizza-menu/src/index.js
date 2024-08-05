@@ -74,22 +74,29 @@ function Header() {
 }
 
 function Menu() {
+  const pizzas = pizzaData;
+
+  const numPizzas = pizzas.length;
+
   return (
     <main className="menu">
       <h2>Our Menu</h2>
-      <ul className="pizzas">
-        {pizzaData.map((pizza) => (
-          <Pizza pizzaObj={pizza} key={pizza.name} />
-        ))}
-        {
-          // tworzymy nasz main w którym znajduje się lista i robimy mapa przez
-          //nasza tabele z danymi i dla każdego elementu robimy nowy element
-          //listy
-          //tylko map działa
-          // nastpenie przesylamy poszegolny element tabeli
-          // key jest od reacta, trzeba przeslac cos orginalnego
-        }
-      </ul>
+
+      {numPizzas > 0 && (
+        <ul className="pizzas">
+          {pizzas.map((pizza) => (
+            <Pizza pizzaObj={pizza} key={pizza.name} />
+          ))}
+          {
+            // tworzymy nasz main w którym znajduje się lista i robimy mapa przez
+            //nasza tabele z danymi i dla każdego elementu robimy nowy element
+            //listy
+            //tylko map działa
+            // nastpenie przesylamy poszegolny element tabeli
+            // key jest od reacta, trzeba przeslac cos orginalnego
+          }
+        </ul>
+      )}
     </main>
   );
 }
@@ -124,7 +131,16 @@ function Footer() {
   //   alert("CLOSE");
   // }
 
-  return <footer className="footer"> {new Date().toLocaleTimeString()} We are open</footer>;
+  return (
+    <footer className="footer">
+      {isOpen && (
+        <div className="order">
+          <p>We are open until {closeHour}:00</p>
+          <button className="btn">Order</button>
+        </div>
+      )}
+    </footer>
+  );
 }
 
 const root = ReactDOM.createRoot(document.getElementById("root")); // tutaj tworzymy root
