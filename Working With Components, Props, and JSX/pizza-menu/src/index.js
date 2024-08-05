@@ -1,8 +1,9 @@
-import React from "react";
-import ReactDOM from "react-dom/client";
-import "./index.css";
+import React from "react"; //importujemy reacta
+import ReactDOM from "react-dom/client"; //importujemy react dom
+import "./index.css"; //importujemy css
 
 const pizzaData = [
+  //tabela
   {
     name: "Focaccia",
     ingredients: "Bread with italian olive oil and rosemary",
