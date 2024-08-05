@@ -49,21 +49,26 @@ const pizzaData = [
 ];
 
 function App() {
+  //nasze główne miejsce robieni
   return (
     <div className="container">
       <Header />
       <Menu />
-      <Footer />
+      <Footer />{" "}
+      {
+        //rozbijamy poszególne funkcje i umiejscawiamy je w divie
+      }
     </div>
   );
 }
 
 function Header() {
-  // const style = { color: "red", fontSize: "40px", textTransform: "uppercase" };
-  //style={style}
   return (
     <header className="header">
-      <h1 className="header">React Pizza</h1>
+      <h1 className="header">React Pizza</h1>{" "}
+      {
+        //tworzymy header z napisem
+      }
     </header>
   );
 }
@@ -76,12 +81,22 @@ function Menu() {
         {pizzaData.map((pizza) => (
           <Pizza pizzaObj={pizza} key={pizza.name} />
         ))}
+        {
+          // tworzymy nasz main w którym znajduje się lista i robimy mapa przez
+          //nasza tabele z danymi i dla każdego elementu robimy nowy element
+          //listy
+          //tylko map działa
+          // nastpenie przesylamy poszegolny element tabeli
+          // key jest od reacta, trzeba przeslac cos orginalnego
+        }
       </ul>
     </main>
   );
 }
 
 function Pizza(props) {
+  // przesylamy props z naszego mapa i na nim tworzymy element listy
+  // na tym object
   return (
     <li className="pizza">
       <img src={props.pizzaObj.photoName} alt=""></img>
@@ -101,6 +116,8 @@ function Footer() {
   const isOpen = hour >= openHour && hour <= closeHour;
   console.log(isOpen);
 
+  //tutaj sprawdzamy godzine i sprawdzamy czy jest teraz zamkniete czy otwarte
+
   // if (hour >= openHour && hour <= closeHour) {
   //   alert("OPEN");
   // } else {
@@ -110,8 +127,9 @@ function Footer() {
   return <footer className="footer"> {new Date().toLocaleTimeString()} We are open</footer>;
 }
 
-const root = ReactDOM.createRoot(document.getElementById("root"));
+const root = ReactDOM.createRoot(document.getElementById("root")); // tutaj tworzymy root
 
+//i renderujemy root na naszym appie
 root.render(
   <React.StrictMode>
     <App />
