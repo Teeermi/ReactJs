@@ -82,7 +82,7 @@ function Menu() {
     <main className="menu">
       <h2>Our Menu</h2>
 
-      {numPizzas > 0 && (
+      {numPizzas > 0 ? (
         <ul className="pizzas">
           {pizzas.map((pizza) => (
             <Pizza pizzaObj={pizza} key={pizza.name} />
@@ -96,6 +96,8 @@ function Menu() {
             // key jest od reacta, trzeba przeslac cos orginalnego
           }
         </ul>
+      ) : (
+        <p>We still working on out menu</p>
       )}
     </main>
   );
@@ -133,12 +135,12 @@ function Footer() {
 
   return (
     <footer className="footer">
-      {isOpen && (
+      {isOpen ? (
         <div className="order">
           <p>We are open until {closeHour}:00</p>
           <button className="btn">Order</button>
         </div>
-      )}
+      ) : null}
     </footer>
   );
 }
