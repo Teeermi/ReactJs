@@ -111,17 +111,13 @@ function Pizza({ pizzaObj }) {
   // przesylamy props z naszego mapa i na nim tworzymy element listy
   // na tym object
 
-  if (pizzaObj.soldOut) {
-    return null;
-  }
-
   return (
-    <li className="pizza">
+    <li className={`pizza ${pizzaObj.soldOut ? "sold-out" : ""}`}>
       <img src={pizzaObj.photoName} alt=""></img>
       <div>
         <h3>{pizzaObj.name}</h3>
         <p>{pizzaObj.ingredients}</p>
-        <span>{pizzaObj.price}</span>
+        <span>{pizzaObj.soldOut ? "SOLD OUT" : pizzaObj.price}</span>
       </div>
     </li>
   );
