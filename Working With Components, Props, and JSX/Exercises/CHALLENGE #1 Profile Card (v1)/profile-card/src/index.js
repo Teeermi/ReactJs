@@ -1,6 +1,39 @@
-import { StrictMode } from "react";
-import { createRoot } from "react-dom/client";
-import "./styles.css";
+import React from "react"; //importujemy reacta
+import ReactDOM from "react-dom/client"; //importujemy react dom
+import "./styles.css"; //importujemy css
+
+const skills = [
+  {
+    skill: "HTML+CSS",
+    level: "advanced",
+    color: "#2662EA",
+  },
+  {
+    skill: "JavaScript",
+    level: "advanced",
+    color: "#EFD81D",
+  },
+  {
+    skill: "Web Design",
+    level: "advanced",
+    color: "#C3DCAF",
+  },
+  {
+    skill: "Git and GitHub",
+    level: "intermediate",
+    color: "#E84F33",
+  },
+  {
+    skill: "React",
+    level: "advanced",
+    color: "#60DAFB",
+  },
+  {
+    skill: "Svelte",
+    level: "beginner",
+    color: "#FF3B00",
+  },
+];
 
 function App() {
   return (
@@ -33,31 +66,30 @@ function Intro() {
   );
 }
 
-function SkillList(params) {
+function SkillList() {
   return (
     <div className="skill-list">
-      <Skill name="HTML" color="red" />
-      <Skill name="CSS" color="blue" />
-      <Skill name="JavaScript" color="purple" />
-      <Skill name="ReactJs" color="yellow" />
-      <Skill name="Github" color="green" />
+      <Skill />
     </div>
   );
 }
 
-function Skill(params) {
-  return (
-    <div className="skill" style={{ backgroundColor: params.color }}>
-      {params.name}
+function Skill() {
+  return skills.map((element) => (
+    <div className="skill" style={{ backgroundColor: element.color }}>
+      {element.level === "advanced" ? "ADV " : ""}
+      {element.level === "intermediate" ? "INT " : ""}
+      {element.level === "beginner" ? "BEG " : ""}
+      {element.skill}
     </div>
-  );
+  ));
 }
 
-const rootElement = document.getElementById("root");
-const root = createRoot(rootElement);
+const root = ReactDOM.createRoot(document.getElementById("root")); // tutaj tworzymy root
 
+//i renderujemy root na naszym appie
 root.render(
-  <StrictMode>
+  <React.StrictMode>
     <App />
-  </StrictMode>
+  </React.StrictMode>
 );
