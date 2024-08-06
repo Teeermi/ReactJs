@@ -142,15 +142,15 @@ function Footer() {
   //   return <p>WE ARE CLOSED</p>;
   // }
 
+  return <footer className="footer">{isOpen ? <Order closeHour={closeHour} /> : null}</footer>;
+}
+
+function Order(props) {
   return (
-    <footer className="footer">
-      {isOpen ? (
-        <div className="order">
-          <p>We are open until {closeHour}:00</p>
-          <button className="btn">Order</button>
-        </div>
-      ) : null}
-    </footer>
+    <div className="order">
+      <p>We are open until {props.closeHour}:00</p>
+      <button className="btn">Order</button>
+    </div>
   );
 }
 
