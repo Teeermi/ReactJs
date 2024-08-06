@@ -83,19 +83,23 @@ function Menu() {
       <h2>Our Menu</h2>
 
       {numPizzas > 0 ? (
-        <ul className="pizzas">
-          {pizzas.map((pizza) => (
-            <Pizza pizzaObj={pizza} key={pizza.name} />
-          ))}
-          {
-            // tworzymy nasz main w którym znajduje się lista i robimy mapa przez
-            //nasza tabele z danymi i dla każdego elementu robimy nowy element
-            //listy
-            //tylko map działa
-            // nastpenie przesylamy poszegolny element tabeli
-            // key jest od reacta, trzeba przeslac cos orginalnego
-          }
-        </ul>
+        <>
+          <p>Lorem implusm doloro set Lorem implusm doloro set Lorem implusm doloro setLorem implusm doloro set</p>
+
+          <ul className="pizzas">
+            {pizzas.map((pizza) => (
+              <Pizza pizzaObj={pizza} key={pizza.name} />
+            ))}
+            {
+              // tworzymy nasz main w którym znajduje się lista i robimy mapa przez
+              //nasza tabele z danymi i dla każdego elementu robimy nowy element
+              //listy
+              //tylko map działa
+              // nastpenie przesylamy poszegolny element tabeli
+              // key jest od reacta, trzeba przeslac cos orginalnego
+            }
+          </ul>
+        </>
       ) : (
         <p>We still working on out menu</p>
       )}
