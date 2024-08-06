@@ -103,21 +103,21 @@ function Menu() {
   );
 }
 
-function Pizza(props) {
+function Pizza({ pizzaObj }) {
   // przesylamy props z naszego mapa i na nim tworzymy element listy
   // na tym object
 
-  if (props.pizzaObj.soldOut) {
+  if (pizzaObj.soldOut) {
     return null;
   }
 
   return (
     <li className="pizza">
-      <img src={props.pizzaObj.photoName} alt=""></img>
+      <img src={pizzaObj.photoName} alt=""></img>
       <div>
-        <h3>{props.pizzaObj.name}</h3>
-        <p>{props.pizzaObj.ingredients}</p>
-        <span>{props.pizzaObj.price}</span>
+        <h3>{pizzaObj.name}</h3>
+        <p>{pizzaObj.ingredients}</p>
+        <span>{pizzaObj.price}</span>
       </div>
     </li>
   );
@@ -142,13 +142,15 @@ function Footer() {
   //   return <p>WE ARE CLOSED</p>;
   // }
 
-  return <footer className="footer">{isOpen ? <Order closeHour={closeHour} /> : null}</footer>;
+  return <footer className="footer">{isOpen ? <Order closeHour={closeHour} openHour={openHour} /> : null}</footer>;
 }
 
-function Order(props) {
+function Order({ closeHour, openHour }) {
   return (
     <div className="order">
-      <p>We are open until {props.closeHour}:00</p>
+      <p>
+        We are open from {openHour}:00 until {closeHour}:00
+      </p>
       <button className="btn">Order</button>
     </div>
   );
