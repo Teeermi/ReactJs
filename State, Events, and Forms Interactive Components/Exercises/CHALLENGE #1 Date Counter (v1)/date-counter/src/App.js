@@ -1,24 +1,40 @@
-import logo from './logo.svg';
-import './App.css';
+import { useState } from "react";
 
 function App() {
+  const [step, setStep] = useState(0);
+  const [counter, setCounter] = useState(0);
+  const date = new Date();
+  const [day, setDay] = useState(date.getDate());
+
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
+    <>
+      <div>
+        <button onClick={() => setStep((s) => s - 1)}>-</button>
+        <p style={{ display: "inline-block" }}> Step: {step} </p>
+        <button
+          onClick={() => {
+            setStep((s) => s + 1);
+            setDay((s) => s + 1);
+          }}
         >
-          Learn React
-        </a>
-      </header>
-    </div>
+          +
+        </button>
+      </div>
+      <div>
+        <button onClick={() => setCounter((s) => s - 1)}>-</button>
+        <p style={{ display: "inline-block" }}>Count: {counter}</p>
+        <button
+          onClick={() => {
+            setCounter((s) => s + 1);
+          }}
+        >
+          +
+        </button>
+      </div>
+      <p>
+        {step} days from today is {day}.08.2024
+      </p>
+    </>
   );
 }
 
