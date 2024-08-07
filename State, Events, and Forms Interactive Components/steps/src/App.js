@@ -4,6 +4,7 @@ const messages = ["Learn React ⚛️", "Apply for jobs 💼", "Invest your new 
 
 export default function App() {
   const [step, setStep] = useState(1);
+  // const [test] = useState({ name: "Jonas" });
 
   function handlePrevious() {
     if (step === 1) return;
