@@ -3,6 +3,14 @@ const messages = ["Learn React ⚛️", "Apply for jobs 💼", "Invest your new 
 export default function App() {
   let step = 1;
 
+  function handlePrevious() {
+    console.log("PREV");
+  }
+
+  function handleNext() {
+    console.log("NExt");
+  }
+
   return (
     <div className="steps">
       <div className="numbers">
@@ -16,8 +24,12 @@ export default function App() {
       </p>
 
       <div className="buttons">
-        <button style={{ backgroundColor: "#7950f2", color: "white" }}>Prevorious</button>
-        <button style={{ backgroundColor: "#7950f2", color: "white" }}>Next</button>
+        <button style={{ backgroundColor: "#7950f2", color: "white" }} onClick={handlePrevious}>
+          Prevorious
+        </button>
+        <button style={{ backgroundColor: "#7950f2", color: "white" }} onClick={handleNext}>
+          Next
+        </button>
       </div>
     </div>
   );
