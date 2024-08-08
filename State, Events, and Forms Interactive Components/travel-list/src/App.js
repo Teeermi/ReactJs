@@ -22,16 +22,23 @@ function Logo() {
 
 function Form() {
   const [desc, setDesc] = useState("");
-  const [quan, setQuan] = useState(0);
+  const [quan, setQuan] = useState(1);
 
   function handleSubmit(e) {
     e.preventDefault();
+    const newItem = { description: desc, quantity: quan, packed: false, id: Date.now() };
+
+    if (!desc) return;
+    initialItems.push(newItem);
+
+    setDesc("");
+    setQuan(1);
   }
 
   return (
     <form className="add-form" onSubmit={handleSubmit}>
       <h3>What do you need for trip</h3>
-      <select value={quan} onChange={(e) => setQuan(e.target.value)}>
+      <select value={quan} onChange={(e) => setQuan(+e.target.value)}>
         {Array.from({ length: 20 }, (nar, i) => i + 1).map((num) => (
           <option value={num} key={num}>
             {num}
