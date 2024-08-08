@@ -22,6 +22,7 @@ function Logo() {
 
 function Form() {
   const [desc, setDesc] = useState("");
+  const [quan, setQuan] = useState(0);
 
   function handleSubmit(e) {
     e.preventDefault();
@@ -30,7 +31,7 @@ function Form() {
   return (
     <form className="add-form" onSubmit={handleSubmit}>
       <h3>What do you need for trip</h3>
-      <select>
+      <select value={quan} onChange={(e) => setQuan(e.target.value)}>
         {Array.from({ length: 20 }, (nar, i) => i + 1).map((num) => (
           <option value={num} key={num}>
             {num}
