@@ -1,41 +1,35 @@
 import { useState } from "react";
 
-function App() {
-  const [step, setStep] = useState(0);
-  const [counter, setCounter] = useState(0);
-  const date = new Date();
-  const [day, setDay] = useState(date.getDate());
-
+export default function App() {
   return (
-    <>
-      <div>
-        <button onClick={() => setStep((s) => s - 1)}>-</button>
-        <p style={{ display: "inline-block" }}> Step: {step} </p>
-        <button
-          onClick={() => {
-            setStep((s) => s + 1);
-            setDay((s) => s + 1);
-          }}
-        >
-          +
-        </button>
-      </div>
-      <div>
-        <button onClick={() => setCounter((s) => s - 1)}>-</button>
-        <p style={{ display: "inline-block" }}>Count: {counter}</p>
-        <button
-          onClick={() => {
-            setCounter((s) => s + 1);
-          }}
-        >
-          +
-        </button>
-      </div>
-      <p>
-        {step} days from today is {day}.08.2024
-      </p>
-    </>
+    <div className="App">
+      <Counter />
+    </div>
   );
 }
 
-export default App;
+function Counter() {
+  const date = new Date("june 21 2027");
+  const [step, setStep] = useState(0);
+  const [counter, setCounter] = useState(1);
+
+  date.setDate(date.getDate() + step * counter);
+
+  return (
+    <div>
+      <div>
+        <button onClick={() => setStep((s) => s - 1)}>-</button>
+        <span>STEP: {step}</span>
+        <button onClick={() => setStep((s) => s + 1)}>+</button>
+      </div>
+      <div>
+        <button onClick={() => setCounter((s) => s - 1)}>-</button>
+        <span>COUNT: {counter}</span>
+        <button onClick={() => setCounter((s) => s + 1)}>+</button>
+      </div>
+      <p>
+        {step === 0 ? "Today " : `${step * counter} days from today`} is {date.toDateString()}
+      </p>
+    </div>
+  );
+}
