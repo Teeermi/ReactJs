@@ -29,7 +29,6 @@ function Form() {
     const newItem = { description: desc, quantity: quan, packed: false, id: Date.now() };
 
     if (!desc) return;
-    initialItems.push(newItem);
 
     setDesc("");
     setQuan(1);
