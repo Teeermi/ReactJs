@@ -18,18 +18,27 @@ function Counter() {
   return (
     <div>
       <div>
-        <button onClick={() => setStep((s) => s - 1)}>-</button>
-        <span>STEP: {step}</span>
-        <button onClick={() => setStep((s) => s + 1)}>+</button>
+        <input type="range" min={0} max={10} onChange={(e) => setStep(+e.target.value)}></input>
+        <span>{step}</span>
       </div>
       <div>
         <button onClick={() => setCounter((s) => s - 1)}>-</button>
-        <span>COUNT: {counter}</span>
+        <input type="number" value={counter} onChange={(e) => setCounter(+e.target.value)}></input>
         <button onClick={() => setCounter((s) => s + 1)}>+</button>
       </div>
       <p>
         {step === 0 ? "Today " : `${step * counter} days from today`} is {date.toDateString()}
       </p>
+      {step !== 0 ? (
+        <button
+          onClick={(e) => {
+            setCounter(1);
+            setStep(1);
+          }}
+        >
+          RESET
+        </button>
+      ) : null}
     </div>
   );
 }
