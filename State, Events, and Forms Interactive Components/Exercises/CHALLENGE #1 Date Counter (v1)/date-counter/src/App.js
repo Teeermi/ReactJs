@@ -36,6 +36,7 @@ function Counter() {
         {step === 0 ? "Today " : `${step * counter} days from today`} is {date.toDateString()}
       </p>
       {step !== 0 ? (
+        //tworzenie buttona reset
         <button
           onClick={(e) => {
             setCounter(1);
