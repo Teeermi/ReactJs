@@ -19,6 +19,10 @@ function Counter() {
 
   return (
     <div>
+      {" "}
+      {
+        // tworzenie inputa slidera
+      }
       <div>
         <input type="range" min={0} max={10} onChange={(e) => setStep(+e.target.value)}></input>
         <span>{step}</span>
