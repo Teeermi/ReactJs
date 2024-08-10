@@ -9,6 +9,7 @@ export default function App() {
 }
 
 function Counter() {
+  //robienie dat
   const date = new Date("june 21 2027");
   const [step, setStep] = useState(0);
   const [counter, setCounter] = useState(1);
