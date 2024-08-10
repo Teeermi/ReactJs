@@ -28,6 +28,9 @@ function Counter() {
         <span>{step}</span>
       </div>
       <div>
+        {
+          //dodwanie i odejmowanie
+        }
         <button onClick={() => setCounter((s) => s - 1)}>-</button>
         <input type="number" value={counter} onChange={(e) => setCounter(+e.target.value)}></input>
         <button onClick={() => setCounter((s) => s + 1)}>+</button>
