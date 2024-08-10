@@ -14,6 +14,7 @@ function Counter() {
   const [step, setStep] = useState(0);
   const [counter, setCounter] = useState(1);
 
+  //dodawnie do daty
   date.setDate(date.getDate() + step * counter);
 
   return (
