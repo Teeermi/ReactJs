@@ -8,7 +8,7 @@ function App() {
     console.log(items);
   }
   function handleDeleteItem(id) {
-    setItems((e) => items.filter((i) => i.id === id));
+    setItems((e) => items.filter((i) => i.id !== id));
   }
 
   return (
