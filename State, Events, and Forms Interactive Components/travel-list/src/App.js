@@ -1,16 +1,18 @@
 import { useState } from "react";
 
-const initialItems = [
-  { id: 1, description: "Passports", quantity: 2, packed: false },
-  { id: 2, description: "Socks", quantity: 12, packed: false },
-];
-
 function App() {
+  const [items, setItems] = useState([]);
+
+  function handleAddItems(item) {
+    setItems((e) => [...e, item]);
+    console.log(items);
+  }
+
   return (
     <div className="app">
       <Logo />
-      <Form />
-      <PackingList />
+      <Form onAddItems={handleAddItems} />
+      <PackingList items={items} />
       <Stats />
     </div>
   );
@@ -20,15 +22,17 @@ function Logo() {
   return <h1>🌴 Far Away 👜</h1>;
 }
 
-function Form() {
+function Form({ onAddItems }) {
   const [desc, setDesc] = useState("");
   const [quan, setQuan] = useState(1);
 
   function handleSubmit(e) {
     e.preventDefault();
-    const newItem = { description: desc, quantity: quan, packed: false, id: Date.now() };
 
     if (!desc) return;
+
+    const newItem = { description: desc, quantity: quan, packed: false, id: Date.now() };
+    onAddItems(newItem);
 
     setDesc("");
     setQuan(1);
@@ -50,11 +54,11 @@ function Form() {
   );
 }
 
-function PackingList() {
+function PackingList({ items }) {
   return (
     <div className="list">
       <ul>
-        {initialItems.map((element) => {
+        {items.map((element) => {
           return <Item element={element} key={element.id} />;
         })}
       </ul>
