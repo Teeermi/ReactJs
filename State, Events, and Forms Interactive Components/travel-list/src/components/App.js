@@ -5,14 +5,15 @@ import { PackingList } from "./PackingList";
 import { Stats } from "./Stats";
 
 function App() {
-  const [items, setItems] = useState([]);
+  const [items, setItems] = useState([]); //tworzymy state z rzeczami w tabeli
 
   function handleAddItems(item) {
-    setItems((e) => [...e, item]);
-    console.log(items);
+    // tutaj tworzymy funckje ktora doda item do tabeli
+    setItems((e) => [...e, item]); //rozbijamy tabele po czym dodajemy nowy item,
   }
   function handleDeleteItem(id) {
-    setItems((e) => items.filter((i) => i.id !== id));
+    // tworzymy funkcje z usuwaniem itemu
+    setItems((e) => items.filter((i) => i.id !== id)); //jesli znajdzie id takie same jakie przeslalismy to usunie to zwroci wszystko oprocz tej rzeczy
   }
   function handleToggleItem(id) {
     //kiedy ktos kliknie checbox to wysle nam id ktore kliknal
@@ -23,12 +24,14 @@ function App() {
   }
 
   function handleDeleteItems() {
+    //usuwanie calej tabeli
     const confirmed = window.confirm("You want to delete all?");
 
     if (!confirmed) return;
     setItems([]);
   }
 
+  // tutaj podajemy wszystkie funckje do naszych komponentow
   return (
     <div className="app">
       <Logo />

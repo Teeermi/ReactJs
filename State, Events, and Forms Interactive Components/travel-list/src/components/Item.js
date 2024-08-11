@@ -1,4 +1,5 @@
 export function Item({ element, onDeleteItem, onToggleItem }) {
+  //edytujemy checkbox, usuwamy itemy i przesylwamy element na ktorym robimy li
   return (
     <li>
       <input

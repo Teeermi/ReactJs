@@ -1,4 +1,5 @@
 export function Stats({ items }) {
+  //dostajemy tabele ze wszystkimi rzeczami i na niej operujemy
   if (!items.length)
     return (
       <footer className="stats">
@@ -7,9 +8,8 @@ export function Stats({ items }) {
       </footer>
     );
 
-  const itemsPacked = items.filter((item) => item.packed).length;
+  const itemsPacked = items.filter((item) => item.packed).length; //zwraca tabele ze wszystkimi itemami ktore sa packed
   const itemsPercent = (itemsPacked / items.length) * 100;
-  console.log(itemsPercent);
 
   return (
     <footer className="stats">
