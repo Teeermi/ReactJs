@@ -23,16 +23,23 @@ const initialFriends = [
 
 export default function App() {
   const [showForm, setShowForm] = useState(false);
+  const [friends, setFriends] = useState(initialFriends);
 
   function handlerShowForm() {
     setShowForm((e) => !e);
   }
 
+  function handleAddFriend(friend) {
+    console.log();
+    setFriends((e) => [...e, friend]);
+    handlerShowForm();
+  }
+
   return (
     <div className="app">
       <div className="sidebar">
-        <FriendsList />
-        {showForm && <FormAddFriend />}
+        <FriendsList friends={friends} />
+        {showForm && <FormAddFriend handleAddFriend={handleAddFriend} />}
         <Button onClick={handlerShowForm}>{showForm ? "Close" : "Add friend"}</Button>
       </div>
       <FormSplitBill />
@@ -40,8 +47,7 @@ export default function App() {
   );
 }
 
-function FriendsList() {
-  const friends = initialFriends;
+function FriendsList({ friends }) {
   return (
     <ul>
       {friends.map((e) => (
@@ -73,14 +79,36 @@ function Button({ children, onClick }) {
   );
 }
 
-function FormAddFriend() {
+function FormAddFriend({ handleAddFriend }) {
+  const [name, setName] = useState("");
+  const [image, setImage] = useState("https://i.pravatar.cc/48");
+
+  function handleSubmit(e) {
+    e.preventDefault();
+
+    if (!name || !image) return;
+
+    const id = crypto.randomUUID();
+
+    const newFriend = {
+      name,
+      image: `${image}?=${id}`,
+      balance: 0,
+      id,
+    };
+    handleAddFriend(newFriend);
+
+    setImage("https://i.pravatar.cc/48");
+    setName("");
+  }
+
   return (
-    <form className="form-add-friend">
+    <form className="form-add-friend" onSubmit={handleSubmit}>
       <label>👤Friend name</label>
-      <input type="text"></input>
+      <input type="text" value={name} onChange={(e) => setName(e.target.value)}></input>
 
       <label>📷 Image url</label>
-      <input type="text" />
+      <input type="text" value={image} onChange={(e) => setImage(e.target.value)} />
 
       <Button>Add</Button>
     </form>
