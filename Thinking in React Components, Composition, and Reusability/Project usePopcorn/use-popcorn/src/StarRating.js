@@ -10,8 +10,8 @@ const starContainerStyle = {
   display: "flex",
 };
 
-export default function StarRating({ maxRating = 5, color = "#fcc419", size = 24 }) {
-  const [rating, setRating] = useState(0);
+export default function StarRating({ maxRating = 5, color = "#fcc419", size = 24, className = "", messeges = [], defaultRating = 0, onSetRating }) {
+  const [rating, setRating] = useState(defaultRating);
   const [tempRating, setTepmRating] = useState(0);
 
   const textStyle = {
@@ -23,10 +23,11 @@ export default function StarRating({ maxRating = 5, color = "#fcc419", size = 24
 
   function handleRating(rating) {
     setRating(rating);
+    onSetRating(rating);
   }
 
   return (
-    <div style={containerStyle}>
+    <div style={containerStyle} className={className}>
       <div style={starContainerStyle}>
         {Array.from({ length: maxRating }, (_, i) => (
           <Star
@@ -39,7 +40,7 @@ export default function StarRating({ maxRating = 5, color = "#fcc419", size = 24
           />
         ))}
       </div>
-      <p style={textStyle}>{tempRating || rating || ""}</p>
+      <p style={textStyle}>{messeges.length === maxRating ? (tempRating ? messeges[tempRating - 1] : messeges[rating - 1]) : tempRating || rating || ""}</p>
     </div>
   );
 }
