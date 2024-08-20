@@ -51,8 +51,6 @@ function Tab({ num, activeTab, onClick }) {
   );
 }
 
-console.log(<DifferentContent />);
-
 function TabContent({ item }) {
   const [showDetails, setShowDetails] = useState(true);
   const [likes, setLikes] = useState(0);
