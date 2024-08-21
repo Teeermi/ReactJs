@@ -48,12 +48,15 @@ const key = `127a278e`;
 export default function App() {
   const [movies, setMovies] = useState(tempMovieData);
   const [watched, setWatched] = useState(tempWatchedData);
+  const [isLoad, setIsLoad] = useState(false);
 
   useEffect(function () {
     async function fetchData() {
+      setIsLoad(true);
       const res = await fetch(`http://www.omdbapi.com/?apikey=${key}&s=world+of+warcraft`);
       const data = await res.json();
       setMovies(data.Search);
+      setIsLoad(false);
     }
     fetchData();
   }, []);
@@ -63,11 +66,16 @@ export default function App() {
       <Nav movies={movies} />
 
       <main className="main">
-        <Box movies={movies} />
+        {!isLoad ? <Box movies={movies} /> : <Loader />}
+
         <BoxMain watched={watched} />
       </main>
     </>
   );
+}
+
+function Loader() {
+  return <p className="loader">LOADING</p>;
 }
 
 function Nav({ movies }) {
