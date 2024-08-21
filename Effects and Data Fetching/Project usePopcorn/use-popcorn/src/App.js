@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 
 const tempMovieData = [
   {
@@ -43,10 +43,20 @@ const tempWatchedData = [
 ];
 
 const average = (arr) => arr.reduce((acc, cur, i, arr) => acc + cur / arr.length, 0);
+const key = `127a278e`;
 
 export default function App() {
   const [movies, setMovies] = useState(tempMovieData);
   const [watched, setWatched] = useState(tempWatchedData);
+
+  useEffect(function () {
+    async function fetchData() {
+      const res = await fetch(`http://www.omdbapi.com/?apikey=${key}&s=world+of+warcraft`);
+      const data = await res.json();
+      setMovies(data.Search);
+    }
+    fetchData();
+  }, []);
 
   return (
     <>
