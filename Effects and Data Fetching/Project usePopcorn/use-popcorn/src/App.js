@@ -1,4 +1,5 @@
 import { useEffect, useState } from "react";
+import StarRating from "./StarRating";
 
 const tempMovieData = [
   {
@@ -54,7 +55,6 @@ export default function App() {
   const [selected, setSelected] = useState(null);
 
   function handleSelect(id) {
-    console.log(id);
     setSelected(id);
   }
 
@@ -162,10 +162,67 @@ function ListItem({ movie, handleSelect }) {
 }
 
 function SelectedMovie({ selected, handleCloseMovie }) {
+  const [movie, setMovie] = useState({});
+  const [isLoad, setIsLoad] = useState(false);
+
+  const {
+    Title: title,
+    Year: year,
+    Poster: poster,
+    Runtime: runtime,
+    imdbRating,
+    Plot: plot,
+    Released: released,
+    Actors: actors,
+    Director: director,
+    Genre: genre,
+  } = movie;
+
+  useEffect(
+    function () {
+      async function fetchData() {
+        setIsLoad(true);
+        const res = await fetch(`http://www.omdbapi.com/?apikey=${key}&i=${selected}`);
+        const data = await res.json();
+        setMovie(data);
+        setIsLoad(false);
+      }
+      fetchData();
+    },
+    [selected]
+  );
+
   return (
     <div className="detail">
-      <button className="btn-back" onClick={handleCloseMovie} />
-      {selected}
+      {isLoad ? (
+        <Loader />
+      ) : (
+        <>
+          <header>
+            <button className="btn-back" onClick={handleCloseMovie} />
+            <img src={poster} alt="Poster of sth"></img>
+            <div className="details-overview">
+              <h2>{title}</h2>
+              <p>
+                {released} &bull; {runtime}
+              </p>
+              <p>{genre}</p>
+              <p>{imdbRating}</p>
+            </div>
+          </header>
+
+          <section>
+            <div className="rating">
+              <StarRating />
+            </div>
+            <p>
+              <em>{plot}</em>
+            </p>
+            <p>{actors}</p>
+            <p>{director}</p>
+          </section>
+        </>
+      )}
     </div>
   );
 }
