@@ -105,7 +105,7 @@ export default function App() {
 }
 
 function Loader() {
-  return <p className="loader">LOADING</p>;
+  return <p className="loader">LOADINGg</p>;
 }
 
 function ErrorMessage({ message }) {
