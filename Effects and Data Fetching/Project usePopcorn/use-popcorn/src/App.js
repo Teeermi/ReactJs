@@ -49,14 +49,25 @@ export default function App() {
   const [movies, setMovies] = useState(tempMovieData);
   const [watched, setWatched] = useState(tempWatchedData);
   const [isLoad, setIsLoad] = useState(false);
+  const [isError, setIsError] = useState("");
 
   useEffect(function () {
     async function fetchData() {
-      setIsLoad(true);
-      const res = await fetch(`http://www.omdbapi.com/?apikey=${key}&s=world+of+warcraft`);
-      const data = await res.json();
-      setMovies(data.Search);
-      setIsLoad(false);
+      try {
+        setIsLoad(true);
+        const res = await fetch(`http://www.omdbapi.com/?apikey=${key}&s=world+of+warcrafasdasdt`);
+
+        if (!res.ok) throw new Error("NO CONNECTION");
+
+        const data = await res.json();
+        if (data.Response === "False") throw new Error("Movie not found");
+        setMovies(data.Search);
+        setIsLoad(false);
+      } catch (error) {
+        setIsError(error.message);
+      } finally {
+        setIsLoad(false);
+      }
     }
     fetchData();
   }, []);
@@ -66,7 +77,7 @@ export default function App() {
       <Nav movies={movies} />
 
       <main className="main">
-        {!isLoad ? <Box movies={movies} /> : <Loader />}
+        {isError ? <ErrorMessage message={isError} /> : isLoad ? <Loader /> : <Box movies={movies} />}
 
         <BoxMain watched={watched} />
       </main>
@@ -76,6 +87,10 @@ export default function App() {
 
 function Loader() {
   return <p className="loader">LOADING</p>;
+}
+
+function ErrorMessage({ message }) {
+  return <p className="error">{message}</p>;
 }
 
 function Nav({ movies }) {
