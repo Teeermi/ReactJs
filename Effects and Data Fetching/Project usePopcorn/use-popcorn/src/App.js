@@ -73,7 +73,7 @@ export default function App() {
           if (!res.ok) throw new Error("NO CONNECTION");
 
           const data = await res.json();
-          if (data.Response === "False") throw new Error("Movie not found");
+          if (data.Response === "False") throw new Error("Movie not found!");
           setMovies(data.Search);
           setIsLoad(false);
         } catch (error) {
