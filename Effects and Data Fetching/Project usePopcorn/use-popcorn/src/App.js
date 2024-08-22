@@ -51,8 +51,16 @@ export default function App() {
   const [isLoad, setIsLoad] = useState(false);
   const [isError, setIsError] = useState("");
   const [query, setQuery] = useState("");
+  const [selected, setSelected] = useState(null);
 
-  const tempQuery = "interstellar";
+  function handleSelect(id) {
+    console.log(id);
+    setSelected(id);
+  }
+
+  function handleCloseMovie() {
+    setSelected(null);
+  }
 
   useEffect(
     function () {
@@ -88,9 +96,9 @@ export default function App() {
       <Nav movies={movies} query={query} setQuery={setQuery} />
 
       <main className="main">
-        {isError ? <ErrorMessage message={isError} /> : isLoad ? <Loader /> : <Box movies={movies} />}
+        {isError ? <ErrorMessage message={isError} /> : isLoad ? <Loader /> : <Box movies={movies} handleSelect={handleSelect} />}
 
-        <BoxMain watched={watched} />
+        {selected ? <SelectedMovie selected={selected} handleCloseMovie={handleCloseMovie} /> : <BoxMain watched={watched} />}
       </main>
     </>
   );
@@ -119,7 +127,7 @@ function Nav({ movies, query, setQuery }) {
   );
 }
 
-function Box({ movies }) {
+function Box({ movies, handleSelect }) {
   const [isOpen1, setIsOpen1] = useState(true);
 
   return (
@@ -128,9 +136,9 @@ function Box({ movies }) {
         {isOpen1 ? "–" : "+"}
       </button>
       {isOpen1 && (
-        <ul className="list">
+        <ul className="list list-movies">
           {movies?.map((movie) => (
-            <ListItem movie={movie} />
+            <ListItem handleSelect={handleSelect} movie={movie} />
           ))}
         </ul>
       )}
@@ -138,9 +146,9 @@ function Box({ movies }) {
   );
 }
 
-function ListItem({ movie }) {
+function ListItem({ movie, handleSelect }) {
   return (
-    <li key={movie.imdbID}>
+    <li onClick={() => handleSelect(movie.imdbID)} key={movie.imdbID}>
       <img src={movie.Poster} alt={`${movie.Title} poster`} />
       <h3>{movie.Title}</h3>
       <div>
@@ -150,6 +158,15 @@ function ListItem({ movie }) {
         </p>
       </div>
     </li>
+  );
+}
+
+function SelectedMovie({ selected, handleCloseMovie }) {
+  return (
+    <div className="detail">
+      <button className="btn-back" onClick={handleCloseMovie} />
+      {selected}
+    </div>
   );
 }
 
@@ -197,7 +214,7 @@ function BoxMain({ watched }) {
 
 function List({ watched }) {
   return (
-    <ul className="list">
+    <ul className="list list-movies">
       {watched.map((movie) => (
         <ListItemTwo movie={movie} />
       ))}
