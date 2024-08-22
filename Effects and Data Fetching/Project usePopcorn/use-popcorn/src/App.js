@@ -50,31 +50,42 @@ export default function App() {
   const [watched, setWatched] = useState(tempWatchedData);
   const [isLoad, setIsLoad] = useState(false);
   const [isError, setIsError] = useState("");
+  const [query, setQuery] = useState("");
 
-  useEffect(function () {
-    async function fetchData() {
-      try {
-        setIsLoad(true);
-        const res = await fetch(`http://www.omdbapi.com/?apikey=${key}&s=world+of+warcrafasdasdt`);
+  const tempQuery = "interstellar";
 
-        if (!res.ok) throw new Error("NO CONNECTION");
+  useEffect(
+    function () {
+      async function fetchData() {
+        try {
+          setIsLoad(true);
+          setIsError("");
+          const res = await fetch(`http://www.omdbapi.com/?apikey=${key}&s=${query}`);
 
-        const data = await res.json();
-        if (data.Response === "False") throw new Error("Movie not found");
-        setMovies(data.Search);
-        setIsLoad(false);
-      } catch (error) {
-        setIsError(error.message);
-      } finally {
-        setIsLoad(false);
+          if (!res.ok) throw new Error("NO CONNECTION");
+
+          const data = await res.json();
+          if (data.Response === "False") throw new Error("Movie not found");
+          setMovies(data.Search);
+          setIsLoad(false);
+        } catch (error) {
+          setIsError(error.message);
+        } finally {
+          setIsLoad(false);
+        }
       }
-    }
-    fetchData();
-  }, []);
+
+      if (query.length < 3) setMovies([]);
+      setIsError("");
+      fetchData();
+      return;
+    },
+    [query]
+  );
 
   return (
     <>
-      <Nav movies={movies} />
+      <Nav movies={movies} query={query} setQuery={setQuery} />
 
       <main className="main">
         {isError ? <ErrorMessage message={isError} /> : isLoad ? <Loader /> : <Box movies={movies} />}
@@ -93,9 +104,7 @@ function ErrorMessage({ message }) {
   return <p className="error">{message}</p>;
 }
 
-function Nav({ movies }) {
-  const [query, setQuery] = useState("");
-
+function Nav({ movies, query, setQuery }) {
   return (
     <nav className="nav-bar">
       <div className="logo">
