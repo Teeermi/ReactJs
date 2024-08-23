@@ -26,7 +26,7 @@ const average = (arr) => arr.reduce((acc, cur, i, arr) => acc + cur / arr.length
 const key = `127a278e`;
 
 export default function App() {
-  const [movies, setMovies] = useState(tempMovieData);
+  const [movies, setMovies] = useState([]);
   const [watched, setWatched] = useState([]);
   const [isLoad, setIsLoad] = useState(false);
   const [isError, setIsError] = useState("");
@@ -65,7 +65,9 @@ export default function App() {
           setMovies(data.Search);
           setIsLoad(false);
         } catch (error) {
-          setIsError(error.message);
+          if (error.name !== "AbortError") {
+            setIsError(error.message);
+          }
         } finally {
           setIsLoad(false);
         }
@@ -175,6 +177,22 @@ function SelectedMovie({ selected, handleCloseMovie, handleAddWatch, watched }) 
     handleAddWatch(newWatchedMovie);
     handleCloseMovie();
   }
+
+  useEffect(
+    function () {
+      function callback(e) {
+        if (e.code === "Escape") {
+          handleCloseMovie();
+        }
+      }
+
+      document.addEventListener("keydown", callback);
+      return function () {
+        document.removeEventListener("keydown", callback);
+      };
+    },
+    [handleCloseMovie]
+  );
 
   const {
     Title: title,
