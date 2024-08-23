@@ -51,11 +51,12 @@ export default function App() {
 
   useEffect(
     function () {
+      const controller = new AbortController();
       async function fetchData() {
         try {
           setIsLoad(true);
           setIsError("");
-          const res = await fetch(`http://www.omdbapi.com/?apikey=${key}&s=${query}`);
+          const res = await fetch(`http://www.omdbapi.com/?apikey=${key}&s=${query}`, { signal: controller.signal });
 
           if (!res.ok) throw new Error("NO CONNECTION");
 
@@ -73,7 +74,9 @@ export default function App() {
       if (query.length < 3) setMovies([]);
       setIsError("");
       fetchData();
-      return;
+      return function () {
+        controller.abort(); //usuwanie nowego requesta kiedy nowy przyjdzie
+      };
     },
     [query]
   );
