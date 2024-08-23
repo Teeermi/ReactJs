@@ -39,6 +39,7 @@ export default function App() {
 
   function handleCloseMovie() {
     setSelected(null);
+    document.title = `usePopcorn v2`;
   }
 
   function handleAddWatch(movie) {
@@ -198,6 +199,13 @@ function SelectedMovie({ selected, handleCloseMovie, handleAddWatch, watched }) 
       fetchData();
     },
     [selected]
+  );
+
+  useEffect(
+    function () {
+      document.title = `Movie | ${title}`;
+    },
+    [title]
   );
 
   return (
