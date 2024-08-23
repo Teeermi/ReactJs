@@ -51,7 +51,7 @@ export default function App() {
 
   useEffect(
     function () {
-      const controller = new AbortController();
+      const controller = new AbortController(); //tworzenie nowego aborta
       async function fetchData() {
         try {
           setIsLoad(true);
