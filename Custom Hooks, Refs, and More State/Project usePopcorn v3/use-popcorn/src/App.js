@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import StarRating from "./StarRating";
 
 const average = (arr) => arr.reduce((acc, cur, i, arr) => acc + cur / arr.length, 0);
@@ -36,6 +36,7 @@ export default function App() {
   }
 
   useEffect(
+    // kiedy dany const sie zmieni to wykona sie ta funkcja
     function () {
       localStorage.setItem("watched", JSON.stringify([watched]));
     },
@@ -102,13 +103,21 @@ function ErrorMessage({ message }) {
 }
 
 function Nav({ movies, query, setQuery }) {
+  const inputElement = useRef(null); // tworzymy input element w zmiennej
+
+  useEffect(function () {
+    console.log(inputElement);
+    inputElement.current.focus(); //i w effect mozemy robic na tym elemencie rozne rzeczy
+  }, []);
+
   return (
     <nav className="nav-bar">
       <div className="logo">
         <span role="img">🍿</span>
         <h1>usePopcorn</h1>
       </div>
-      <input className="search" type="text" placeholder="Search movies..." value={query} onChange={(e) => setQuery(e.target.value)} />
+      <input className="search" type="text" placeholder="Search movies..." value={query} onChange={(e) => setQuery(e.target.value)} ref={inputElement} />
+      {/* poznien przypisujemu refa do naszego consta */}
       <p className="num-results">
         Found <strong>{movies.length}</strong> results
       </p>
