@@ -106,7 +106,6 @@ function Nav({ movies, query, setQuery }) {
   const inputElement = useRef(null); // tworzymy input element w zmiennej
 
   useEffect(function () {
-    console.log(inputElement);
     inputElement.current.focus(); //i w effect mozemy robic na tym elemencie rozne rzeczy
   }, []);
 
@@ -164,6 +163,15 @@ function SelectedMovie({ selected, handleCloseMovie, handleAddWatch, watched }) 
   const [isLoad, setIsLoad] = useState(false);
   const [userRate, setUserRate] = useState(0);
 
+  const countRef = useRef(0);
+
+  useEffect(
+    function () {
+      if (userRate) countRef.current = countRef.current++;
+    },
+    [userRate]
+  );
+
   const watchedUserRating = watched.find((e) => e.imdbID === selected)?.userRate;
 
   function handleAll() {
@@ -175,6 +183,7 @@ function SelectedMovie({ selected, handleCloseMovie, handleAddWatch, watched }) 
       imdbRating: +imdbRating,
       runtime: +runtime.split(" ").at(0),
       userRate,
+      countRate: countRef.current,
     };
     handleAddWatch(newWatchedMovie);
     handleCloseMovie();
