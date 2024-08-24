@@ -1,6 +1,7 @@
 import { useEffect, useRef, useState } from "react";
 import StarRating from "./StarRating";
 import { useMovies } from "./useMovies";
+import { useLocalStorageState } from "./useLocalStorageState";
 
 const key = `127a278e`;
 
@@ -12,11 +13,13 @@ export default function App() {
 
   const { movies, isLoad, isError } = useMovies(query);
 
-  const [watched, setWatched] = useState(function () {
-    //uzywanie funkcji tylko w momencie w ktorym jest potrzebna
-    const storedValue = localStorage.getItem("watched") || [];
-    return JSON.parse(storedValue);
-  });
+  const [watched, setWatched] = useLocalStorageState([], "watched");
+
+  // const [watched, setWatched] = useState(function () {
+  //   //uzywanie funkcji tylko w momencie w ktorym jest potrzebna
+  //   const storedValue = localStorage.getItem("watched") || [];
+  //   return JSON.parse(storedValue);
+  // });
 
   function handleSelect(id) {
     setSelected(id);
@@ -36,13 +39,13 @@ export default function App() {
     setWatched((watched) => watched.filter((e) => e.imdbID !== id));
   }
 
-  useEffect(
-    // kiedy dany const sie zmieni to wykona sie ta funkcja
-    function () {
-      localStorage.setItem("watched", JSON.stringify([watched]));
-    },
-    [watched]
-  );
+  // useEffect(
+  //   // kiedy dany const sie zmieni to wykona sie ta funkcja
+  //   function () {
+  //     localStorage.setItem("watched", JSON.stringify([watched]));
+  //   },
+  //   [watched]
+  // );
 
   return (
     <>
@@ -155,22 +158,6 @@ function SelectedMovie({ selected, handleCloseMovie, handleAddWatch, watched }) 
     handleAddWatch(newWatchedMovie);
     handleCloseMovie();
   }
-
-  useEffect(
-    function () {
-      function callback(e) {
-        if (e.code === "Escape") {
-          handleCloseMovie();
-        }
-      }
-
-      document.addEventListener("keydown", callback);
-      return function () {
-        document.removeEventListener("keydown", callback);
-      };
-    },
-    [handleCloseMovie]
-  );
 
   const {
     Title: title,
