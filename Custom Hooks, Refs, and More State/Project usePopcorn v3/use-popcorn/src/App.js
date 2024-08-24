@@ -2,6 +2,7 @@ import { useEffect, useRef, useState } from "react";
 import StarRating from "./StarRating";
 import { useMovies } from "./useMovies";
 import { useLocalStorageState } from "./useLocalStorageState";
+import { useKey } from "./useKey";
 
 const key = `127a278e`;
 
@@ -158,6 +159,8 @@ function SelectedMovie({ selected, handleCloseMovie, handleAddWatch, watched }) 
     handleAddWatch(newWatchedMovie);
     handleCloseMovie();
   }
+
+  useKey("Escape", handleCloseMovie);
 
   const {
     Title: title,
