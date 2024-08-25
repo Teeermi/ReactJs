@@ -1,6 +1,8 @@
 import { useEffect, useReducer } from "react";
 import Header from "./Header";
 import Main from "./Main";
+import Loader from "./Loader";
+import Error from "./Error";
 
 const initialState = {
   // tutaj tworzymy nasze state i przypisujemy im domyslna wartosc
@@ -23,12 +25,12 @@ function reducer(state, action) {
 }
 
 export default function App() {
-  const [state, dispatch] = useReducer(reducer, initialState);
+  const [{ questions, status }, dispatch] = useReducer(reducer, initialState);
 
   useEffect(() => {
     async function fetchData() {
       try {
-        const res = await fetch("http://localhost:8000/questiasdons");
+        const res = await fetch("http://localhost:8000/questions");
         const data = await res.json();
 
         dispatch({ type: "dataRecived", payload: data }); // uzywamy reducera i wysylamy dane z api
@@ -44,8 +46,8 @@ export default function App() {
       <Header />
 
       <Main>
-        <p>1/15</p>
-        <p>Question?</p>
+        {status === "loading" && <Loader />}
+        {status === "error" && <Error />}
       </Main>
     </div>
   );
