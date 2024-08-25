@@ -3,16 +3,18 @@ import Header from "./Header";
 import Main from "./Main";
 
 const initialState = {
+  // tutaj tworzymy nasze state i przypisujemy im domyslna wartosc
   questions: [],
   status: "loading",
 };
 
 function reducer(state, action) {
+  // tutaj tworzymy reducer ktory odbiera wszystkie state i action
   switch (action.type) {
     case "dataRecived":
-      return { ...state, questions: action.payload, status: "ready" };
+      return { ...state, questions: action.payload, status: "ready" }; // jesli dostaniemy dane z naszego api to przypisze dane ktore dostniamy do tabeli i nada status ready
 
-    case "dataFailed":
+    case "dataFailed": // jesli nie uda sie otrzymac danych z api to po prostu odesle wszystkie state i ustawi status error
       return { ...state, status: "error" };
 
     default:
@@ -29,7 +31,7 @@ export default function App() {
         const res = await fetch("http://localhost:8000/questiasdons");
         const data = await res.json();
 
-        dispatch({ type: "dataRecived", payload: data });
+        dispatch({ type: "dataRecived", payload: data }); // uzywamy reducera i wysylamy dane z api
       } catch (error) {
         dispatch({ type: "dataFailed" });
       }
