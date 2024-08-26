@@ -39,6 +39,8 @@ function reducer(state, action) {
 
     case "finish": // jesli nie uda sie otrzymac danych z api to po prostu odesle wszystkie state i ustawi status error
       return { ...state, status: "finished", highscore: state.points > state.highscore ? state.points : state.highscore };
+    case "restart": // jesli nie uda sie otrzymac danych z api to po prostu odesle wszystkie state i ustawi status error
+      return { ...state, status: "ready", index: 0, answer: null, points: 0 };
 
     default:
       throw new Error("ERROR");
@@ -82,7 +84,7 @@ export default function App() {
           </>
         )}
 
-        {status === "finished" && <FinishScreen points={points} maxPoints={maxPoints} highscore={highscore} />}
+        {status === "finished" && <FinishScreen points={points} maxPoints={maxPoints} highscore={highscore} dispatch={dispatch} />}
       </Main>
     </div>
   );
