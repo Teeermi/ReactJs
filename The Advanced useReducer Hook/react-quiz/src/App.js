@@ -4,6 +4,7 @@ import Main from "./Main";
 import Loader from "./Loader";
 import Error from "./Error";
 import StartScreen from "./StartScreen";
+import Question from "./Question";
 
 const initialState = {
   // tutaj tworzymy nasze state i przypisujemy im domyslna wartosc
@@ -19,6 +20,9 @@ function reducer(state, action) {
 
     case "dataFailed": // jesli nie uda sie otrzymac danych z api to po prostu odesle wszystkie state i ustawi status error
       return { ...state, status: "error" };
+
+    case "start": // jesli nie uda sie otrzymac danych z api to po prostu odesle wszystkie state i ustawi status error
+      return { ...state, status: "active" };
 
     default:
       throw new Error("ERROR");
@@ -51,7 +55,8 @@ export default function App() {
       <Main>
         {status === "loading" && <Loader />}
         {status === "error" && <Error />}
-        {status === "ready" && <StartScreen numQue={numQue} />}
+        {status === "ready" && <StartScreen numQue={numQue} dispatch={dispatch} />}
+        {status === "active" && <Question />}
       </Main>
     </div>
   );
