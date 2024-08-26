@@ -28,18 +28,18 @@ function reducer(state, action) {
     case "dataFailed": // jesli nie uda sie otrzymac danych z api to po prostu odesle wszystkie state i ustawi status error
       return { ...state, status: "error" };
 
-    case "start": // jesli nie uda sie otrzymac danych z api to po prostu odesle wszystkie state i ustawi status error
+    case "start":
       return { ...state, status: "active" };
 
-    case "newAnswer": // jesli nie uda sie otrzymac danych z api to po prostu odesle wszystkie state i ustawi status error
+    case "newAnswer":
       const question = state.questions.at(state.index);
       return { ...state, answer: action.payload, points: action.payload === question.correctOption ? state.points + question.points : state.points };
-    case "nextQuestion": // jesli nie uda sie otrzymac danych z api to po prostu odesle wszystkie state i ustawi status error
+    case "nextQuestion":
       return { ...state, index: state.index + 1, answer: null };
 
-    case "finish": // jesli nie uda sie otrzymac danych z api to po prostu odesle wszystkie state i ustawi status error
+    case "finish":
       return { ...state, status: "finished", highscore: state.points > state.highscore ? state.points : state.highscore };
-    case "restart": // jesli nie uda sie otrzymac danych z api to po prostu odesle wszystkie state i ustawi status error
+    case "restart":
       return { ...state, status: "ready", index: 0, answer: null, points: 0 };
 
     default:
