@@ -5,6 +5,7 @@ import Loader from "./Loader";
 import Error from "./Error";
 import StartScreen from "./StartScreen";
 import Question from "./Question";
+import NextButton from "./NextButton";
 
 const initialState = {
   // tutaj tworzymy nasze state i przypisujemy im domyslna wartosc
@@ -30,6 +31,8 @@ function reducer(state, action) {
     case "newAnswer": // jesli nie uda sie otrzymac danych z api to po prostu odesle wszystkie state i ustawi status error
       const question = state.questions.at(state.index);
       return { ...state, answer: action.payload, points: action.payload === question.correctOption ? state.points + question.points : state.points };
+    case "nextQuestion": // jesli nie uda sie otrzymac danych z api to po prostu odesle wszystkie state i ustawi status error
+      return { ...state, index: state.index + 1, answer: null };
 
     default:
       throw new Error("ERROR");
@@ -63,7 +66,11 @@ export default function App() {
         {status === "loading" && <Loader />}
         {status === "error" && <Error />}
         {status === "ready" && <StartScreen numQue={numQue} dispatch={dispatch} />}
-        {status === "active" && <Question questions={questions[index]} dispatch={dispatch} answer={answer} />}
+        {status === "active" && (
+          <>
+            <Question questions={questions[index]} dispatch={dispatch} answer={answer} /> <NextButton dispatch={dispatch} answer={answer} />{" "}
+          </>
+        )}
       </Main>
     </div>
   );
