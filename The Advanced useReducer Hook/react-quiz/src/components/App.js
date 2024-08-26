@@ -10,6 +10,7 @@ const initialState = {
   // tutaj tworzymy nasze state i przypisujemy im domyslna wartosc
   questions: [],
   status: "loading",
+  index: 0,
 };
 
 function reducer(state, action) {
@@ -30,7 +31,7 @@ function reducer(state, action) {
 }
 
 export default function App() {
-  const [{ questions, status }, dispatch] = useReducer(reducer, initialState);
+  const [{ questions, status, index }, dispatch] = useReducer(reducer, initialState);
 
   const numQue = questions.length;
 
@@ -56,7 +57,7 @@ export default function App() {
         {status === "loading" && <Loader />}
         {status === "error" && <Error />}
         {status === "ready" && <StartScreen numQue={numQue} dispatch={dispatch} />}
-        {status === "active" && <Question />}
+        {status === "active" && <Question questions={questions[index]} />}
       </Main>
     </div>
   );
