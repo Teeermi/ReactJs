@@ -7,6 +7,7 @@ import StartScreen from "./StartScreen";
 import Question from "./Question";
 import NextButton from "./NextButton";
 import Progress from "./Progress";
+import FinishScreen from "./FinishScreen";
 
 const initialState = {
   // tutaj tworzymy nasze state i przypisujemy im domyslna wartosc
@@ -15,6 +16,7 @@ const initialState = {
   index: 0,
   answer: null,
   points: 0,
+  highscore: 0,
 };
 
 function reducer(state, action) {
@@ -35,13 +37,16 @@ function reducer(state, action) {
     case "nextQuestion": // jesli nie uda sie otrzymac danych z api to po prostu odesle wszystkie state i ustawi status error
       return { ...state, index: state.index + 1, answer: null };
 
+    case "finish": // jesli nie uda sie otrzymac danych z api to po prostu odesle wszystkie state i ustawi status error
+      return { ...state, status: "finished", highscore: state.points > state.highscore ? state.points : state.highscore };
+
     default:
       throw new Error("ERROR");
   }
 }
 
 export default function App() {
-  const [{ questions, status, index, answer, points }, dispatch] = useReducer(reducer, initialState);
+  const [{ questions, status, index, answer, points, highscore }, dispatch] = useReducer(reducer, initialState);
 
   const numQue = questions.length;
 
@@ -72,9 +77,12 @@ export default function App() {
         {status === "active" && (
           <>
             <Progress index={index} numQue={numQue} points={points} maxPoints={maxPoints} answer={answer} />
-            <Question questions={questions[index]} dispatch={dispatch} answer={answer} /> <NextButton dispatch={dispatch} answer={answer} />{" "}
+            <Question questions={questions[index]} dispatch={dispatch} answer={answer} />{" "}
+            <NextButton dispatch={dispatch} answer={answer} index={index} numQue={numQue} />{" "}
           </>
         )}
+
+        {status === "finished" && <FinishScreen points={points} maxPoints={maxPoints} highscore={highscore} />}
       </Main>
     </div>
   );
