@@ -6,6 +6,7 @@ import Error from "./Error";
 import StartScreen from "./StartScreen";
 import Question from "./Question";
 import NextButton from "./NextButton";
+import Progress from "./Progress";
 
 const initialState = {
   // tutaj tworzymy nasze state i przypisujemy im domyslna wartosc
@@ -40,9 +41,11 @@ function reducer(state, action) {
 }
 
 export default function App() {
-  const [{ questions, status, index, answer }, dispatch] = useReducer(reducer, initialState);
+  const [{ questions, status, index, answer, points }, dispatch] = useReducer(reducer, initialState);
 
   const numQue = questions.length;
+
+  const maxPoints = questions.map((e) => e.points).reduce((accu, val) => (accu += val), 0);
 
   useEffect(() => {
     async function fetchData() {
@@ -68,6 +71,7 @@ export default function App() {
         {status === "ready" && <StartScreen numQue={numQue} dispatch={dispatch} />}
         {status === "active" && (
           <>
+            <Progress index={index} numQue={numQue} points={points} maxPoints={maxPoints} answer={answer} />
             <Question questions={questions[index]} dispatch={dispatch} answer={answer} /> <NextButton dispatch={dispatch} answer={answer} />{" "}
           </>
         )}
