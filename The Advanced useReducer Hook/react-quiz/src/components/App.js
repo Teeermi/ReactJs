@@ -11,6 +11,8 @@ const initialState = {
   questions: [],
   status: "loading",
   index: 0,
+  answer: null,
+  points: 0,
 };
 
 function reducer(state, action) {
@@ -25,13 +27,17 @@ function reducer(state, action) {
     case "start": // jesli nie uda sie otrzymac danych z api to po prostu odesle wszystkie state i ustawi status error
       return { ...state, status: "active" };
 
+    case "newAnswer": // jesli nie uda sie otrzymac danych z api to po prostu odesle wszystkie state i ustawi status error
+      const question = state.questions.at(state.index);
+      return { ...state, answer: action.payload, points: action.payload === question.correctOption ? state.points + question.points : state.points };
+
     default:
       throw new Error("ERROR");
   }
 }
 
 export default function App() {
-  const [{ questions, status, index }, dispatch] = useReducer(reducer, initialState);
+  const [{ questions, status, index, answer }, dispatch] = useReducer(reducer, initialState);
 
   const numQue = questions.length;
 
@@ -57,7 +63,7 @@ export default function App() {
         {status === "loading" && <Loader />}
         {status === "error" && <Error />}
         {status === "ready" && <StartScreen numQue={numQue} dispatch={dispatch} />}
-        {status === "active" && <Question questions={questions[index]} />}
+        {status === "active" && <Question questions={questions[index]} dispatch={dispatch} answer={answer} />}
       </Main>
     </div>
   );
