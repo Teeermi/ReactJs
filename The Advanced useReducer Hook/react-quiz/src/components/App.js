@@ -8,6 +8,8 @@ import Question from "./Question";
 import NextButton from "./NextButton";
 import Progress from "./Progress";
 import FinishScreen from "./FinishScreen";
+import Footer from "./Footer";
+import Timer from "./Timer";
 
 const initialState = {
   // tutaj tworzymy nasze state i przypisujemy im domyslna wartosc
@@ -17,6 +19,7 @@ const initialState = {
   answer: null,
   points: 0,
   highscore: 0,
+  time: 300,
 };
 
 function reducer(state, action) {
@@ -42,13 +45,16 @@ function reducer(state, action) {
     case "restart":
       return { ...state, status: "ready", index: 0, answer: null, points: 0 };
 
+    case "tick":
+      return { ...state, time: state.time - 1, status: state.time === 0 ? "finished" : state.status };
+
     default:
       throw new Error("ERROR");
   }
 }
 
 export default function App() {
-  const [{ questions, status, index, answer, points, highscore }, dispatch] = useReducer(reducer, initialState);
+  const [{ questions, status, index, answer, points, highscore, time }, dispatch] = useReducer(reducer, initialState);
 
   const numQue = questions.length;
 
@@ -80,7 +86,10 @@ export default function App() {
           <>
             <Progress index={index} numQue={numQue} points={points} maxPoints={maxPoints} answer={answer} />
             <Question questions={questions[index]} dispatch={dispatch} answer={answer} />{" "}
-            <NextButton dispatch={dispatch} answer={answer} index={index} numQue={numQue} />{" "}
+            <Footer>
+              <Timer time={time} dispatch={dispatch} />
+              <NextButton dispatch={dispatch} answer={answer} index={index} numQue={numQue} />{" "}
+            </Footer>
           </>
         )}
 
