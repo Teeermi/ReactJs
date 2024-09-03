@@ -165,9 +165,7 @@ function Archive() {
         <ul>
           {posts.map((post, i) => (
             <li key={i}>
-              <p>
-                <strong>{post.title}:</strong> {post.body}
-              </p>
+              <p></p>
               <button onClick={() => onAddPost(post)}>Add as new post</button>
             </li>
           ))}
