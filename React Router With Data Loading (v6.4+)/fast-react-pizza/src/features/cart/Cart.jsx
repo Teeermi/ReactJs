@@ -35,7 +35,7 @@ function Cart() {
 
       <div>
         <Link to="/order/new">Order pizzas</Link>
-        <button>Clear cart</button>
+        <button className="hover:text-blue-600">Clear cart</button>
       </div>
     </div>
   );
